@@ -3,6 +3,12 @@ package co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import co.com.ceiba.mobile.pruebadeingreso.common.Failure
+import co.com.ceiba.mobile.pruebadeingreso.common.Result
+import co.com.ceiba.mobile.pruebadeingreso.common.Success
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.ErrorResponse
+import co.com.ceiba.mobile.pruebadeingreso.users.domain.entity.UserMessageResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.usecase.GetUserListUseCase
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.usecase.GetUserPostsListUseCase
 import kotlinx.coroutines.*
@@ -15,31 +21,60 @@ class UserViewModel(private val _getUserListUseCase: GetUserListUseCase,
 
     val model: LiveData<UiModel>
         get(){
-            if (_model.value == null) {
-                UiModel.Loading(true)
-                UiModel.SearchBar(false)
-            }
+            if (_model.value == null) UiModel.Loading(true)
             return _model
         }
 
     private var _job: Job? = null
-    private var _jobSpinnerList: Job? = null
 
-    init {
+    fun getUserList(){
+        _job?.cancel()
+        _job = viewModelScope.launch(_dispatcher) {
+            when (val result = _getUserListUseCase()) {
 
+                is Success -> withContext(Dispatchers.Main) {
+                    _model.value = UiModel.UserList(result.value)
+                }
+                is Failure -> withContext(Dispatchers.Main) {
+                    _model.value = UiModel.Message(result.reason.message.takeIf { it != null }
+                        ?: UserMessageResponse.SYSTEM_ERROR.message)
+                }
+            }
+
+            withContext(Dispatchers.Main){
+                _model.value = UiModel.Loading(false)
+            }
+
+            _job?.cancel()
+
+        }
+    }
+
+    fun getPostListById(id: Int){
+        _job?.cancel()
+        _job = viewModelScope.launch(_dispatcher) {
+            when (val result = _getUserPostsListUseCase(id)) {
+
+                is Success -> withContext(Dispatchers.Main) {
+                    _model.value = UiModel.UserPostList(result.value)
+                }
+                is Failure -> withContext(Dispatchers.Main) {
+                    _model.value = UiModel.Message(result.reason.message.takeIf { it != null }
+                        ?: UserMessageResponse.SYSTEM_ERROR.message)
+                }
+            }
+
+            withContext(Dispatchers.Main){
+                _model.value = UiModel.Loading(false)
+            }
+
+            _job?.cancel()
+        }
     }
 
 
     override fun onCleared(){
        super.onCleared()
        _job?.cancel()
-        _jobSpinnerList?.cancel()
-    }
-
-
-    sealed class UiModel{
-        data class Loading(val visible: Boolean) : UiModel()
-        data class SearchBar(val visible: Boolean) : UiModel()
-        data class Message(val message: String): UiModel()
     }
 }
