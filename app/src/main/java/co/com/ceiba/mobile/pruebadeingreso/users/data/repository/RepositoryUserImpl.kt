@@ -9,8 +9,8 @@ import co.com.ceiba.mobile.pruebadeingreso.users.domain.RepositoryUser
 
 private const val NETWORK_ERROR = "Network Error"
 
-class RepositorySearchImpl(private val _remote: UserApi,
-                           private val _networkManagerState: NetworkManagerState) : RepositoryUser {
+class RepositoryUserImpl(private val _remote: UserApi,
+                         private val _networkManagerState: NetworkManagerState) : RepositoryUser {
 
     override suspend fun getUsersList(): Result<List<UserListResponse>, Exception> {
         return if(_networkManagerState.isConnected())

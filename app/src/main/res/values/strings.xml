@@ -11,4 +11,5 @@
     <string name="phone">1-770-736-8031 x56442</string>
     <string name="email">jhondoe@email.com</string>
     <string name="title_list">Lista de publicaciones</string>
+    <string name="default_text">Default Message</string>
 </resources>

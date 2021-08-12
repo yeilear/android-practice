@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_background_dialog"
+    android:background="@color/black_opacity_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_background_dialog_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:padding="25dp"
+        android:background="@drawable/shape_dialog_button_sheet">
+
+        <FrameLayout
+            android:id="@+id/fl_background_type_dialog_alert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_type_dialog_alert"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_gravity="start|top"
+                android:src="@drawable/ic_alert"/>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:layout_marginTop="1dp"
+            android:layout_gravity="top">
+
+            <TextView
+                android:id="@+id/et_message_dialog_alert"
+                style="@style/font_p"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
