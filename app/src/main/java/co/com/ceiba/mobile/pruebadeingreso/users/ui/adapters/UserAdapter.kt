@@ -46,7 +46,7 @@ class UserAdapter (private var _users: MutableList<UserListResponse>,
             binding.email.text = user.email
             binding.phone.text = user.phone
             binding.btnViewPost.setOnClickListener{
-                setListener(user)
+                _listener.onClick(user)
             }
         }
     }
@@ -55,9 +55,5 @@ class UserAdapter (private var _users: MutableList<UserListResponse>,
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val binding = UserListItemBinding.bind(view)
-
-        fun setListener(user: UserListResponse){
-            binding.root.setOnClickListener { _listener.onClick(user) }
-        }
     }
 }

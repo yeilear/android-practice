@@ -1,6 +1,7 @@
 package co.com.ceiba.mobile.pruebadeingreso.users
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.GridLayoutManager
+import co.com.ceiba.mobile.pruebadeingreso.common.USER_ID
 import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DialogBuilder
 import co.com.ceiba.mobile.pruebadeingreso.databinding.ActivityMainBinding
 import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
@@ -111,6 +113,6 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
     }
 
     override fun onClick(item: UserListResponse) {
-        TODO("Not yet implemented")
+        startActivity(Intent(this, PostActivity::class.java).putExtra(USER_ID,item.id))
     }
 }
