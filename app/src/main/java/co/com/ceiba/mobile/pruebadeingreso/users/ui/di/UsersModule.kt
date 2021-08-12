@@ -3,6 +3,8 @@ package co.com.ceiba.mobile.pruebadeingreso.users.ui.di
 import android.content.Context
 import co.com.ceiba.mobile.pruebadeingreso.common.URL_BASE
 import co.com.ceiba.mobile.pruebadeingreso.common.network.NetworkManagerStateImpl
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.RoomUserLocal
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.UserDataBase
 import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.RetrofitUserFactory
 import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.UserApiImpl
 import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.RepositoryUserImpl
@@ -25,6 +27,6 @@ class UsersModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideRepositoryUserImpl() = RepositoryUserImpl(
+    fun provideRepositoryUserImpl() = RepositoryUserImpl(RoomUserLocal(UserDataBase.getDatabase(context)),
         UserApiImpl(RetrofitUserFactory.userApiRetrofit(URL_BASE)),NetworkManagerStateImpl(context))
 }

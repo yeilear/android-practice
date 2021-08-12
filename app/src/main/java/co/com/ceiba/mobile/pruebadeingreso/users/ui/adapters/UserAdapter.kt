@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.com.ceiba.mobile.pruebadeingreso.R
 import co.com.ceiba.mobile.pruebadeingreso.databinding.UserListItemBinding
-import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.model.UserEntity
 import java.util.*
 
-class UserAdapter (private var _users: MutableList<UserListResponse>,
+class UserAdapter (private var _users: MutableList<UserEntity>,
                    private var _listener: OnCardClickListener,
-                   private var _userSearchList: List<UserListResponse> = _users.toList()) :
+                   private var _userSearchList: List<UserEntity> = _users.toList()) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     private lateinit var _mContext: Context
@@ -22,7 +22,7 @@ class UserAdapter (private var _users: MutableList<UserListResponse>,
         if (charText.isNullOrEmpty())
             _users = _userSearchList.toMutableList()
         else {
-            for (user: UserListResponse in _userSearchList) {
+            for (user: UserEntity in _userSearchList) {
                 if (user.name.lowercase(Locale.getDefault()).contains(charText.lowercase(Locale.getDefault())))
                     _users.add(user)
             }

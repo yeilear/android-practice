@@ -1,7 +1,7 @@
 package co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters
 
-import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.model.UserEntity
 
 interface OnCardClickListener {
-    fun onClick(item: UserListResponse)
+    fun onClick(item: UserEntity)
 }

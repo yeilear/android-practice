@@ -10,7 +10,7 @@ import co.com.ceiba.mobile.pruebadeingreso.common.USER_ID
 import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DataBuilderDialog
 import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DialogBuilder
 import co.com.ceiba.mobile.pruebadeingreso.databinding.ActivityPostBinding
-import co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters.UserAdapter
+import co.com.ceiba.mobile.pruebadeingreso.users.domain.entity.UserGeneric
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters.UserPostAdapter
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.di.DaggerUsersComponent
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.di.UsersModule
@@ -42,8 +42,11 @@ class PostActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
-        intent.getIntExtra(USER_ID,0).let {
-            _userViewModel.getPostListById(it)
+        intent.getParcelableExtra<UserGeneric>(USER_ID)?.let {
+            _userViewModel.getPostListById(it.id)
+            _binder.name.text = it.name
+            _binder.phone.text = it.phone
+            _binder.email.text = it.email
         }
     }
 

@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.com.ceiba.mobile.pruebadeingreso.common.Failure
-import co.com.ceiba.mobile.pruebadeingreso.common.Result
 import co.com.ceiba.mobile.pruebadeingreso.common.Success
-import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.ErrorResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.entity.UserMessageResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.usecase.GetUserListUseCase
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.usecase.GetUserPostsListUseCase

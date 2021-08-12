@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import co.com.ceiba.mobile.pruebadeingreso.common.USER_ID
 import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DialogBuilder
 import co.com.ceiba.mobile.pruebadeingreso.databinding.ActivityMainBinding
-import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters.OnCardClickListener
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters.UserAdapter
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.di.DaggerUsersComponent
@@ -22,6 +21,8 @@ import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UiModel
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UserViewModel
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UserViewModelFactory
 import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DataBuilderDialog
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.model.UserEntity
+import co.com.ceiba.mobile.pruebadeingreso.users.domain.entity.UserGeneric
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnCardClickListener {
@@ -112,7 +113,15 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
         _dialogMessage?.show()
     }
 
-    override fun onClick(item: UserListResponse) {
-        startActivity(Intent(this, PostActivity::class.java).putExtra(USER_ID,item.id))
+    override fun onClick(item: UserEntity) {
+        startActivity(Intent(this, PostActivity::class.java)
+            .putExtra(USER_ID,
+                UserGeneric(
+                    item.id,
+                    item.name,
+                    item.email,
+                    item.phone
+                )
+            ))
     }
 }

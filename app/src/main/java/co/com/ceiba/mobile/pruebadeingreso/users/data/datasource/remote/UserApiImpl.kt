@@ -4,7 +4,7 @@ import co.com.ceiba.mobile.pruebadeingreso.common.Failure
 import co.com.ceiba.mobile.pruebadeingreso.common.HttpCode
 import co.com.ceiba.mobile.pruebadeingreso.common.Result
 import co.com.ceiba.mobile.pruebadeingreso.common.Success
-import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
+import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.local.model.UserEntity
 import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserPostResponse
 
 private const val TIME_OUT = "Time out Network"
@@ -14,7 +14,7 @@ private const val UN_KNOW_ERROR = "Un know error"
 private const val EXCEPTION_ERROR = "Exception"
 class UserApiImpl(private  val _retrofitUsersApi: RetrofitUsersApi): UserApi {
 
-    override suspend fun getUsersList(): Result<List<UserListResponse>, Exception> {
+    override suspend fun getUsersList(): Result<List<UserEntity>, Exception> {
         try {
             val result = _retrofitUsersApi.getUsersList()
 
