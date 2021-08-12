@@ -33,11 +33,13 @@ class UserViewModel(private val _getUserListUseCase: GetUserListUseCase,
             when (val result = _getUserListUseCase()) {
 
                 is Success -> withContext(Dispatchers.Main) {
+                    _model.value = UiModel.EmptyList(false)
                     _model.value = UiModel.UserList(result.value)
                 }
                 is Failure -> withContext(Dispatchers.Main) {
                     _model.value = UiModel.Message(result.reason.message.takeIf { it != null }
                         ?: UserMessageResponse.SYSTEM_ERROR.message)
+                    _model.value = UiModel.EmptyList(true)
                 }
             }
 

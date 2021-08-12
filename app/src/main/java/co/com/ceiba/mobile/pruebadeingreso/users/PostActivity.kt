@@ -27,6 +27,11 @@ class PostActivity : AppCompatActivity(){
         initComponents()
     }
 
+    override fun onStart() {
+        super.onStart()
+        _userViewModel.getPostListById(1)
+    }
+
     private fun initComponents() {
         _binder = ActivityPostBinding.inflate(layoutInflater)
         setContentView(_binder.root)
