@@ -6,7 +6,6 @@ import co.com.ceiba.mobile.pruebadeingreso.common.network.NetworkManagerState
 import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.ErrorResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.data.datasource.remote.UserApi
 import co.com.ceiba.mobile.pruebadeingreso.users.domain.RepositoryUser
-import java.security.MessageDigest
 
 private const val NETWORK_ERROR = "Network Error"
 
