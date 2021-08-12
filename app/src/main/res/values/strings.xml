@@ -7,4 +7,8 @@
     <string name="generic_error">Ha ocurrido un error inesperado</string>
     <string name="accept">Aceptar</string>
     <string name="list_is_empty">List is empty</string>
+    <string name="name">Jhon doe</string>
+    <string name="phone">1-770-736-8031 x56442</string>
+    <string name="email">jhondoe@email.com</string>
+    <string name="title_list">Lista de publicaciones</string>
 </resources>
