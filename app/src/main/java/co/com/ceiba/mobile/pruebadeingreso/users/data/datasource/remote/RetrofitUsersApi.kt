@@ -14,5 +14,5 @@ interface RetrofitUsersApi {
     suspend fun getUsersList(): Response<List<UserListResponse>>
 
     @GET(GET_POST_USER)
-    suspend fun getUserPost(@Query("id") hash: String): Response<UserPostResponse?>
+    suspend fun getUserPost(@Query("id") id: Int): Response<List<UserPostResponse>>
 }
