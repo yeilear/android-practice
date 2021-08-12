@@ -38,12 +38,19 @@
             android:layout_below="@id/textInputLayoutSearch"
             android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSearchResults"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srLoading"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/textInputLayoutSearch"/>
+            android:layout_below="@id/textInputLayoutSearch">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSearchResults"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 

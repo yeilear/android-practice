@@ -1,5 +1,6 @@
 package co.com.ceiba.mobile.pruebadeingreso.users
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.recyclerview.widget.GridLayoutManager
+import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DialogBuilder
 import co.com.ceiba.mobile.pruebadeingreso.databinding.ActivityMainBinding
 import co.com.ceiba.mobile.pruebadeingreso.users.data.repository.UserListResponse
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.adapters.OnCardClickListener
@@ -17,6 +19,7 @@ import co.com.ceiba.mobile.pruebadeingreso.users.ui.di.UsersModule
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UiModel
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UserViewModel
 import co.com.ceiba.mobile.pruebadeingreso.users.ui.viewmodel.UserViewModelFactory
+import co.com.ceiba.mobile.pruebadeingreso.common.dialog.DataBuilderDialog
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnCardClickListener {
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
     private lateinit var _adapter: UserAdapter
 
     private lateinit var _binder: ActivityMainBinding
+
+    private var _dialogMessage: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +61,8 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
     private fun updateUi() {
         _userViewModel.model.observe(this) {
             when (it) {
-                /* is UiModel.Loading -> showDialogLoading(it.visible)
-                is UiModel.Message -> showMessage(it.message)*/
+                is UiModel.Loading -> _binder.srLoading.isRefreshing = it.visible
+                is UiModel.Message -> showMessage(it.message)
                 is UiModel.EmptyList -> showEmptyList(it.visible)
                 is UiModel.UserList -> {
                     _adapter = UserAdapter(it.list.toMutableList(), this)
@@ -66,11 +71,14 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
                         adapter = _adapter
                     }
                 }
+                else -> return@observe
             }
         }
     }
 
     private fun setViewAction() {
+        _binder.srLoading.setOnRefreshListener { _userViewModel.getUserList() }
+
         _binder.editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Do Nothing
@@ -94,6 +102,12 @@ class MainActivity : AppCompatActivity(), OnCardClickListener {
             _binder.recyclerViewSearchResults.visibility = View.GONE
             _binder.emptyView.root.visibility = View.VISIBLE
         }
+    }
+
+    private fun showMessage(message: String) {
+        _dialogMessage?.cancel()
+        _dialogMessage = DialogBuilder.showAlertDialog(this, DataBuilderDialog(message = message))
+        _dialogMessage?.show()
     }
 
     override fun onClick(item: UserListResponse) {

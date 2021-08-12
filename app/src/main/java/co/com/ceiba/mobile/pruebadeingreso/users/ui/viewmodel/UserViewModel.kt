@@ -21,7 +21,7 @@ class UserViewModel(private val _getUserListUseCase: GetUserListUseCase,
 
     val model: LiveData<UiModel>
         get(){
-            if (_model.value == null) UiModel.Loading(true)
+            if (_model.value == null) _model.value = UiModel.Loading(true)
             return _model
         }
 
